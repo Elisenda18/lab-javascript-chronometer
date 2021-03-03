@@ -1,37 +1,56 @@
 class Chronometer {
+
   constructor() {
     this.currentTime = 0;
     this.intervalId = 0;
   }
+
   startClick(callback) {
+
     this.intervalId = setInterval(() => {
-      this.currentTime++; 
+      this.currentTime += 1;
     }, 1000);
+
   }
+
   getMinutes() {
-    let roundMinutes = Math.floor(this.currentTime / 60);
-    return roundMinutes;
+    
+    let countMinutes = Math.floor(this.currentTime/60);
+    return countMinutes;
+
   }
   getSeconds() {
-    let roundSeconds = this.currentTime % 60;
-    return roundSeconds;
+    return this.currentTime % 60;
   }
-  twoDigitsNumber(number) {
-    return number < 10 ? `0${number}` : `${number}`;
+
+  twoDigitsNumber(num) {
+
+    //return num.toString().length < 2 ? "0" + num.toString() : num.toString();
+
+    if (num.toString().length < 2) {
+      return "0" + num.toString()
+    } else if (num.toString().length === 2) {
+      return num.toString();
+    } else {
+      throw Error ("Somtething went bad!")
+    }
+  
   }
+
   stopClick() {
-    return clearInterval(this.intervalId);
+
+    clearInterval(this.intervalId);
+
   }
   resetClick() {
-    return this.currentTime = 0;
+    this.currentTime = 0;
   }
   splitClick() {
-    let roundMinutes = getMinutes();
-    let roundSeconds = getSeconds();
 
-    let splitMinutes = twoDigitsNumber(roundMinutes);
-    let splitSeconds = twoDigitsNumber(roundSeconds);
+    let minutes = this.getMinutes();
+    let seconds = this.getSeconds();
 
-    return `${splitMinutes}:${splitSeconds}`;
+    return `${this.twoDigitsNumber(minutes)}:${this.twoDigitsNumber(seconds)}`;
+    
   }
 }

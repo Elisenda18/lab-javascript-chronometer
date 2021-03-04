@@ -23,6 +23,11 @@ class Chronometer {
     return this.currentTime % 60;
   }
 
+  getMilliseconds() {
+
+    return this.currentTime * 1000;
+  }
+
   twoDigitsNumber(num) {
 
     //return num.toString().length < 2 ? "0" + num.toString() : num.toString();
@@ -49,8 +54,9 @@ class Chronometer {
 
     let minutes = this.getMinutes();
     let seconds = this.getSeconds();
+    let milliSeconds = this.getMilliseconds();
 
-    return `${this.twoDigitsNumber(minutes)}:${this.twoDigitsNumber(seconds)}`;
+    return `${this.twoDigitsNumber(minutes)}:${this.twoDigitsNumber(seconds)}:${this.twoDigitsNumber(milliSeconds)}`;
     
   }
 }

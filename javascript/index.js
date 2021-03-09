@@ -14,78 +14,91 @@ let milUni = document.getElementById('milUni');
 let splits = document.getElementById('splits');
 
 function printTime() {
-  // 1. Set interval para que el cronómetro vaya incrementando cada 1000
-
-  // 2. Definir que si los segundos llegan a 60 > empiecen los minutos y los segundos se queden a 00
-
-  // 3. Mostrar esto en el DOM
-  document.getElementById("sphere").innerHTML = minutes + ":" + seconds;
+  printMinutes();
+  printSeconds();
+  printMilliseconds();
 }
 
 function printMinutes() {
-  // Verificar que el formato de "minutes" sea el correcto, no estoy segura de que se guarde como string.
-  let decimalMinute = minDec.innerHTML = chronometer.twoDigitsNumber(getMinutes()).charAt(0);
-  let unitMinute = minUni.innerHTML = chronometer.twoDigitsNumber(getMinutes()).charAt(1);
-  return minutes = decimalMinute + unitMinute;
+  let minutes = chronometer.twoDigitsNumber(chronometer.getMinutes());
+  console.log(minutes)
+  minDec.innerHTML = minutes[0];
+  minUni.innerHTML = minutes[1];
 }
 
 function printSeconds() {
-  // Verificar que el formato de "minutes" sea el correcto, no estoy segura de que se guarde como string.
-
-  let decimalSecond = secDec.innerHTML = chronometer.twoDigitsNumber(getSeconds()).charAt(0);
-  let unitSecond = unitDec.innerHTML = chronometer.twoDigitsNumber(getSeconds()).charAt(1);
-  return seconds = decimalSecond + unitSecond;
+  let seconds = chronometer.twoDigitsNumber(chronometer.getSeconds());
+  console.log(seconds);
+  secDec.innerHTML = seconds[0];
+  secUni.innerHTML = seconds[1];
 }
 
 // ==> BONUS
 function printMilliseconds() {
-  // ... your code goes here
+  
+  let milliseconds = chronometer.twoDigitsNumber(chronometer.getMilliseconds());
+  milDec.innerHTML = milliseconds[0];
+  milUni.innerHTML = milliseconds[1];
+
 }
 
 function printSplit() {
-  // ... your code goes here
+  let splitResult = chronometer.splitClick();
+  let newSplit = document.createElement("li");
+  newSplit.innerText = splitResult;
+  splits.appendChild(newSplit);
 }
 
 function clearSplits() {
-  // ... your code goes here
+  splits.innerHTML = " ";
 }
 
 function setStopBtn() {
-  //Añadir una nueva clase de "stop" que muestre STOP
-
-
-  // Toggle entre clases para que al clicar "start", el botón ha se cambie a stop.
-  element.onclick = function(event) {
-    console.log(event);
-  }
-
+  btnLeft.className = "btn stop";
+  btnLeft.innerHTML = "STOP";
 }
 
 function setSplitBtn() {
-  // ... your code goes here
+  btnRight.className = "btn split";
+  btnRight.innerHTML = "SPLIT";
 }
 
 function setStartBtn() {
-  // ... your code goes here
+  btnLeft.className = "btn start";
+  btnLeft.innerHTML = "START";
 }
 
 function setResetBtn() {
-  // ... your code goes here
+  btnRight.className = "btn reset";
+  btnRight.innerHTML = "RESET";
 }
 
 // Start/Stop Button
 btnLeft.addEventListener('click', () => {
-
-    // Añadir callback a la función de PrintTime para que se imprima el tiempo cuando se clique "Start"
+  if(btnLeft.classList.contains("start")){
     
+    chronometer.startClick(printTime);
+    console.log("it started counting")
+    setStopBtn();
+    setSplitBtn();
 
-  // ... your code goes here
+  } else {
+    chronometer.stopClick();
+    setStartBtn();
+    setResetBtn();
+  }
+
 });
 
 // Reset/Split Button
 btnRight.addEventListener('click', () => {
+  if(btnRight.classList.contains("reset")){
+    chronometer.resetClick();
+    clearSplits();
+    printTime();
 
-  // Añadir callback a la función de resetClick del chronometer.js para que se "clear" el interval al clicar en el botón de Reset
-  // Añadir callback a la función de splitClick del chronometer.js para que se imprima el tiempo al momento de clicar el botón de Split
-  // ... your code goes here
+  } else {
+    printSplit();
+  }
+
 });
